@@ -11,7 +11,7 @@ import {
   Link
 } from "react-router-dom";
 import MypProfile from './components/Pages/MyProfile'
-import Feed from './components/Pages/Feed'
+import Feed from './components/Pages/Feed/Feed'
 
 function App() {
  

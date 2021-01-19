@@ -1,10 +1,10 @@
 
 import React, { useState } from 'react';
-import { Container } from "react-bootstrap";
+import { Container, Form, Button, Row, Col } from "react-bootstrap";
 function MyProfile() {
     return (
-      <Container>
-        <h1>Myprofile</h1>
+      <Container >
+           <h1>My Profile</h1> 
       </Container>
     );
   }

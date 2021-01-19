@@ -9,7 +9,7 @@ import {
   Link
 } from "react-router-dom";
 import MyProfile from '../Pages/MyProfile'
-import Feed from '../Pages/Feed'
+import Feed from '../Pages/Feed/Feed'
 
 function Content(props) {
   
@@ -25,8 +25,6 @@ function Content(props) {
           </Route>
           <Route path="/myprofile">
           <MyProfile/>
-          </Route>
-          <Route path="/">
           </Route>
       </Switch>
       </Container>
