@@ -1,17 +1,15 @@
 import React, { useState, useContext } from "react";
 import { Form, Button, Card, Alert } from "react-bootstrap";
 import ReactModal from "react-modal";
-import { useHistory } from "react-router-dom";
-
+import { loginUser } from "../../lip/api";
 // ========
 
-export default function Login() {
+export default function Login({ logInFunc }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-  const historyFunc = useHistory();
-
+  const [role, setRole] = useState("Employee");
   // ========
 
   const openModel = () => {
@@ -24,18 +22,18 @@ export default function Login() {
     setIsOpen(false);
   };
   const onLoginSubmit = async (event) => {
-    //     let loginObject = { email, password };
-    //     event.preventDefault();
-    //     const userLogin = await loginUser(loginObject);
-    //     if (userLogin === "unknown Email") {
-    //       setErrorMessage("unknown Email");
-    //     } else if (userLogin === "incorrect password") {
-    //       setErrorMessage("incorrect password");
-    //     } else if (userLogin.commend === "password is correct") {
-    //       contextData.logInFunc(userLogin);
-    //       setIsOpen(false);
-    //       historyFunc.push("./HomePageOpen");
-    //     }
+    event.preventDefault();
+
+    const loginObject = { role, email, password };
+    const loginResult = await loginUser(loginObject);
+
+    if (loginResult.error) {
+      setErrorMessage("Email or password are incorrect");
+    }
+    if (loginResult.id) {
+      console.log("loginResult :>> ", loginResult);
+      logInFunc();
+    }
   };
 
   // ========
@@ -49,6 +47,21 @@ export default function Login() {
           <h2>Log In</h2>
           {errorMessage ? <Alert variant={"danger"}>{errorMessage}</Alert> : ""}
           <Card.Body>
+            <div>
+              <Form className="d-inline">
+                <Form.Label>type of user</Form.Label>
+                <Form.Control
+                  as="select"
+                  name="type of user"
+                  onChange={(event) => {
+                    setRole(event.target.value);
+                  }}
+                >
+                  <option value="Employee">Employee</option>
+                  <option value="Employer">Employer</option>
+                </Form.Control>
+              </Form>
+            </div>
             <Form
               onSubmit={(event) => {
                 onLoginSubmit(event);
@@ -63,6 +76,9 @@ export default function Login() {
                   required
                   onChange={(event) => {
                     setEmail(event.target.value);
+                    if (errorMessage) {
+                      setErrorMessage("");
+                    }
                   }}
                 />
                 <Form.Text className="text-muted"></Form.Text>
@@ -76,6 +92,9 @@ export default function Login() {
                   value={password}
                   onChange={(event) => {
                     setPassword(event.target.value);
+                    if (errorMessage) {
+                      setErrorMessage("");
+                    }
                   }}
                 />
               </Form.Group>
