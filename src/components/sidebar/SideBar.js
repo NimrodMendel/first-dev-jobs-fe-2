@@ -17,6 +17,7 @@ import {
 } from "react-router-dom";
 import {LinkContainer} from 'react-router-bootstrap'
 
+
 function SideBar(props) {
     return (
       <div className={classNames("sidebar", { "is-open": props.isOpen })}>
