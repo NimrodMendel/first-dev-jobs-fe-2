@@ -1,29 +1,24 @@
 import React, { useState, useContext } from "react";
 import { Form, Button, Card, Alert } from "react-bootstrap";
 import ReactModal from "react-modal";
-import { useHistory } from "react-router-dom";
-
+import { validatePasswords, signUpNewUser } from "../../lip/api";
 // ========
 
 export default function SignUp() {
-  const historyFunc = useHistory();
-
-  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
-  // const contextData = useContext(mainContext);
   const [isOpen, setIsOpen] = useState(false);
   const [validationError, setValidationError] = useState("");
   const [validationOK, setValidationOK] = useState("");
-
   const [isSignUp, setIsSignUp] = useState(false);
-  // ========
-
-  if (isSignUp) {
-    historyFunc.push("./HomePageOpen");
-  }
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [companyName, setCompanyName] = useState("");
+  const [passwordErrorMessage, setPasswordErrorMessage] = useState("");
+  const [isPasswordError, setIsPasswordError] = useState(false);
+  const [role, setRole] = useState("Employee");
 
   const openModel = () => {
     setValidationOK(``);
@@ -34,35 +29,55 @@ export default function SignUp() {
     setIsOpen(false);
   };
   const onSignUpSubmit = async (event) => {
-    // event.preventDefault();
-    // setValidationOK(``);
-    // const newUser = {
-    //   name,
-    //   email,
-    //   phoneNumber,
-    //   password,
-    // };
-    // const isPasswordsInvalid = validatePasswords(newUser, passwordConfirmation);
-    // setValidationError(isPasswordsInvalid);
-    // if (isPasswordsInvalid) {
-    //   return;
-    // } else {
-    //   const userSignIn = await signUpNewUser(newUser);
-    //   if (userSignIn === "Email already in use") {
-    //     setValidationError("Email already in use, pick new Email or Log in");
-    //   } else if (userSignIn === "ok") {
-    //     setValidationOK(`${name} had been sign in`);
-    //     setName("");
-    //     setEmail("");
-    //     setPassword("");
-    //     setPasswordConfirmation("");
-    //     setPhoneNumber("");
-    //   }
-    // }
+    event.preventDefault();
+    setValidationOK(``);
+    let newUser;
+    if (role === "Employee") {
+      newUser = {
+        firstName,
+        lastName,
+        email,
+        phoneNumber,
+        password,
+        role,
+      };
+    } else {
+      newUser = {
+        companyName,
+        email,
+        phoneNumber,
+        password,
+        role,
+      };
+    }
+    const isPasswordsInvalid = await validatePasswords(
+      newUser,
+      passwordConfirmation
+    );
+    if (isPasswordsInvalid) {
+      setValidationError(isPasswordsInvalid);
+    } else {
+      const signUpResult = await signUpNewUser(newUser);
+
+      console.log("signUpResult :>> ", signUpResult);
+      if (signUpResult.id) {
+        setValidationOK(`new user had been sign up`);
+        setFirstName("");
+        setLastName("");
+        setCompanyName("");
+        setFirstName("");
+        setPhoneNumber("");
+        setPassword("");
+        setPasswordConfirmation("");
+        setEmail("");
+      }
+    }
   };
   return (
     <>
-      <Button onClick={openModel}>Sign Up</Button>
+      <Button className="ml-3" onClick={openModel}>
+        Sign Up
+      </Button>
 
       <ReactModal ariaHideApp={false} isOpen={isOpen}>
         <div className="d-flex">
@@ -74,7 +89,6 @@ export default function SignUp() {
           ) : (
             ""
           )}
-
           {validationError ? (
             <Alert className="m-auto" variant={"danger"}>
               {validationError}
@@ -87,25 +101,74 @@ export default function SignUp() {
           <Card.Title className="mx-auto">
             <strong>Sign Up</strong>
           </Card.Title>
-          <Card.Body>
+          <Card.Body className="p-5">
+            <div>
+              <Form className="d-inline">
+                <Form.Label>type of user</Form.Label>
+                <Form.Control
+                  as="select"
+                  name="type of user"
+                  onChange={(event) => {
+                    setRole(event.target.value);
+                  }}
+                >
+                  <option value="Employee">Employee</option>
+                  <option value="Employer">Employer</option>
+                </Form.Control>
+              </Form>
+            </div>
+
             <Form
               onSubmit={(event) => {
                 onSignUpSubmit(event);
               }}
             >
-              <Form.Group controlId="formName">
-                <Form.Label>Name</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Enter First and Lest Name"
-                  value={name}
-                  required
-                  onChange={(event) => {
-                    setName(event.target.value);
-                  }}
-                />
-                <Form.Text className="text-muted"></Form.Text>
-              </Form.Group>
+              {role === "Employee" ? (
+                <>
+                  {" "}
+                  <Form.Group controlId="formFirstName">
+                    <Form.Label>First Name</Form.Label>
+                    <Form.Control
+                      type="text"
+                      placeholder="Enter First Name"
+                      value={firstName}
+                      required
+                      onChange={(event) => {
+                        setFirstName(event.target.value);
+                      }}
+                    />
+                  </Form.Group>
+                  <Form.Group controlId="formLastName">
+                    <Form.Label>Last Name</Form.Label>
+                    <Form.Control
+                      type="text"
+                      placeholder="Enter Last Name"
+                      value={lastName}
+                      required
+                      onChange={(event) => {
+                        setLastName(event.target.value);
+                      }}
+                    />
+                  </Form.Group>
+                </>
+              ) : (
+                <>
+                  {" "}
+                  <Form.Group controlId="formCompanyName">
+                    <Form.Label>Company Name</Form.Label>
+                    <Form.Control
+                      type="text"
+                      placeholder="Enter Company Name"
+                      value={companyName}
+                      required
+                      onChange={(event) => {
+                        setCompanyName(event.target.value);
+                      }}
+                    />
+                  </Form.Group>
+                </>
+              )}
+
               <Form.Group controlId="phoneNumber">
                 <Form.Label>Phone Number</Form.Label>
                 <Form.Control
@@ -141,6 +204,9 @@ export default function SignUp() {
                   value={password}
                   onChange={(event) => {
                     setPassword(event.target.value);
+                    if (validationError) {
+                      setValidationError("");
+                    }
                   }}
                 />
               </Form.Group>
@@ -153,6 +219,9 @@ export default function SignUp() {
                   value={passwordConfirmation}
                   onChange={(event) => {
                     setPasswordConfirmation(event.target.value);
+                    if (validationError) {
+                      setValidationError("");
+                    }
                   }}
                 />
               </Form.Group>
