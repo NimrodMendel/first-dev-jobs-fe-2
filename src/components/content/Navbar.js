@@ -3,10 +3,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAlignLeft } from "@fortawesome/free-solid-svg-icons";
 import { Navbar, Button, Nav } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
+import { useGlobal } from "reactn"; // <-- reactn
+
 import Login from "./Login";
 import SignUp from "./SignUp";
 function NavBar(props) {
-  const [isLogin, setIsLogin] = useState(false);
+  const [isLogin, setIsLogin] = useGlobal("isLogin");
+
+  // const [isLogin, setIsLogin] = useState(false);
 
   const logInFunc = () => {
     setIsLogin(true);

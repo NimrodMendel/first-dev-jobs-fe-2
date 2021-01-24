@@ -26,7 +26,7 @@ export default function Login({ logInFunc }) {
 
     const loginObject = { role, email, password };
     const loginResult = await loginUser(loginObject);
-
+    console.log("loginResult :>> ", loginResult);
     if (loginResult.error) {
       setErrorMessage("Email or password are incorrect");
     }
