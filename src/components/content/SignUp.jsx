@@ -2,9 +2,12 @@ import React, { useState, useContext } from "react";
 import { Form, Button, Card, Alert } from "react-bootstrap";
 import ReactModal from "react-modal";
 import { validatePasswords, signUpNewUser } from "../../lip/api";
+import { useGlobal } from "reactn"; // <-- reactn
+
 // ========
 
 export default function SignUp() {
+  const [global, setGlobal] = useGlobal();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
@@ -12,12 +15,12 @@ export default function SignUp() {
   const [isOpen, setIsOpen] = useState(false);
   const [validationError, setValidationError] = useState("");
   const [validationOK, setValidationOK] = useState("");
-  const [isSignUp, setIsSignUp] = useState(false);
+  // const [isSignUp, setIsSignUp] = useState(false);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [companyName, setCompanyName] = useState("");
   const [passwordErrorMessage, setPasswordErrorMessage] = useState("");
-  const [isPasswordError, setIsPasswordError] = useState(false);
+  // const [isPasswordError, setIsPasswordError] = useState(false);
   const [role, setRole] = useState("Employee");
 
   const openModel = () => {
@@ -50,6 +53,7 @@ export default function SignUp() {
         role,
       };
     }
+    console.log("global :>> ", global);
     const isPasswordsInvalid = await validatePasswords(
       newUser,
       passwordConfirmation
@@ -70,6 +74,9 @@ export default function SignUp() {
         setPassword("");
         setPasswordConfirmation("");
         setEmail("");
+      } else if ((signUpResult.error = "email already exists")) {
+        console.log("something went really wrong");
+        setPasswordErrorMessage("email already exists");
       }
     }
   };
@@ -92,6 +99,13 @@ export default function SignUp() {
           {validationError ? (
             <Alert className="m-auto" variant={"danger"}>
               {validationError}
+            </Alert>
+          ) : (
+            ""
+          )}
+          {passwordErrorMessage ? (
+            <Alert className="m-auto" variant={"danger"}>
+              {passwordErrorMessage}
             </Alert>
           ) : (
             ""
@@ -190,6 +204,7 @@ export default function SignUp() {
                   value={email}
                   required
                   onChange={(event) => {
+                    setPasswordErrorMessage("");
                     setEmail(event.target.value);
                   }}
                 />

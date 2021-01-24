@@ -21,10 +21,12 @@ export const signUpNewUser = async (obj) => {
     .catch(function (error) {
       console.error(error);
     });
+  console.log("result", result);
   return result;
 };
 
 export const loginUser = async (loginObject) => {
+  console.log("loginObject", loginObject);
   let result;
   await axios
     .post(`${baseUrl}/api/users/login`, { user: loginObject })
@@ -34,5 +36,7 @@ export const loginUser = async (loginObject) => {
     .catch(function (error) {
       console.error(error);
     });
+  console.log("result", result);
+
   return result;
 };
