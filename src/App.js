@@ -6,12 +6,7 @@ import Content from "./components/content/Content";
 
 import {
   BrowserRouter as Router,
-  Switch,
-  Route,
-  Link
 } from "react-router-dom";
-import MypProfile from './components/Pages/MyProfile'
-import Feed from './components/Pages/Feed/Feed'
 
 function App() {
  

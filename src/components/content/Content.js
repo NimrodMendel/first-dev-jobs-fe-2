@@ -8,12 +8,16 @@ import {
   Route,
   Link
 } from "react-router-dom";
-import MyProfile from '../Pages/MyProfile'
+import MyProfileNav from '../Pages/MyProfile/MyProfileNav'
 import Feed from '../Pages/Feed/Feed'
+import UserProfile from '../Pages/MyProfile/UserProfile';
+import UserUpload from '../Pages/MyProfile/UserUpload';
+import Feather from '../Pages/MyProfile/Feather';
 
 function Content(props) {
   
     return (
+      
       <Container
         fluid
         className={classNames("content", { "is-open": props.isOpen })}
@@ -24,10 +28,17 @@ function Content(props) {
            <Feed/>
           </Route>
           <Route path="/myprofile">
-          <MyProfile/>
+          <UserProfile/>
+          </Route>
+          <Route path="/userupload">
+          <UserUpload/>
+          </Route>
+          <Route path="/feather">
+          <Feather/>
           </Route>
       </Switch>
       </Container>
+      
     );
   
 }

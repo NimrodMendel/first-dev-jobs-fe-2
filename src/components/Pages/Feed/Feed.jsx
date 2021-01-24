@@ -42,7 +42,7 @@ function Feed() {
               <Col xs lg="5" md="auto">
               <Form>
               <Form.Group controlId="form">
-                <Form.Label>Title</Form.Label>
+                <Form.Label>Job Title</Form.Label>
                 <Form.Control value={jobTitle} onChange={handleChangeJobTitle} type="text"/>
               </Form.Group>
               <Form.Group controlId="exampleForm.ControlTextarea1">
@@ -50,7 +50,7 @@ function Feed() {
                 <Form.Control value={description} onChange={handleChangeDescription} as="textarea" rows={3} />
               </Form.Group>
               <Button variant="primary" onClick={() => handleSubmit(0)}>
-                Post!
+                Post Job!
               </Button>
             </Form>
             {validErr ? <Alert key={'danger'} variant={'danger'}>
