@@ -23,6 +23,8 @@ function Posts(props) {
         <div class="mar-btm">
           <a href="#" class="btn-link text-semibold media-heading box-inline">Lisa D.</a>
           <p class="text-muted text-sm"><i class="fa fa-globe fa-lg"></i> - From Web - 2 min ago</p>
+          <p class="text-muted text-sm">Location:{' ' + props.post.location}</p>
+          <p class="text-muted text-sm">Salary:{' ' + props.post.salary }</p>
         </div>
         <h3>{props.post.jobTitle}</h3>
         <p>{props.post.description}</p>
