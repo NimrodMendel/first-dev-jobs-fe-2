@@ -1,7 +1,10 @@
 import React, { useState, useContext } from "react";
 import { Form, Button, Card, Alert } from "react-bootstrap";
 import ReactModal from "react-modal";
-import { loginUser } from "../../lip/api";
+import { loginUser, getUserById } from "../../lip/api";
+import { useHistory } from "react-router-dom";
+import { useGlobal } from "reactn"; // <-- reactn
+
 // ========
 
 export default function Login({ logInFunc }) {
@@ -10,6 +13,12 @@ export default function Login({ logInFunc }) {
   const [isOpen, setIsOpen] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [role, setRole] = useState("Employee");
+  const history = useHistory();
+  const [userId, setUserId] = useGlobal("userId");
+  const [userObject, setUserObject] = useGlobal("userObject");
+
+  const [Global, setGlobal] = useGlobal();
+
   // ========
 
   const openModel = () => {
@@ -26,17 +35,17 @@ export default function Login({ logInFunc }) {
 
     const loginObject = { role, email, password };
     const loginResult = await loginUser(loginObject);
-    console.log("loginResult :>> ", loginResult);
     if (loginResult.error) {
       setErrorMessage("Email or password are incorrect");
     }
     if (loginResult.id) {
-      console.log("loginResult :>> ", loginResult);
-      logInFunc();
+      await logInFunc();
+      await setUserId(loginResult.id);
+      await history.push(`/${Global.userId}`);
+      const getUserByIdResult = await getUserById(Global.userId);
+      await setUserObject(getUserByIdResult);
     }
   };
-
-  // ========
 
   return (
     <>

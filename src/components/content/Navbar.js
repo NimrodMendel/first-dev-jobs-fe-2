@@ -9,6 +9,8 @@ import Login from "./Login";
 import SignUp from "./SignUp";
 function NavBar(props) {
   const [isLogin, setIsLogin] = useGlobal("isLogin");
+  const [userId, setUserId] = useGlobal("userId");
+  const [userObject, setUserObject] = useGlobal("userObject");
 
   // const [isLogin, setIsLogin] = useState(false);
 
@@ -17,6 +19,8 @@ function NavBar(props) {
   };
   const logOutFunc = () => {
     setIsLogin(false);
+    setUserId("");
+    setUserObject({});
   };
 
   return (
