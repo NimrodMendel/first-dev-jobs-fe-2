@@ -4,18 +4,12 @@ import ReactModal from "react-modal";
 import { loginUser } from "../../lip/api";
 import { useHistory } from "react-router-dom";
 import { useGlobal } from "reactn"; // <-- reactn
-import { updateUser } from "../../lip/api";
+import { updateUser, getUserById } from "../../lip/api";
 // ========
 
 export default function EditUser() {
   const [Global, setGlobal] = useGlobal();
   const [userObject, setUserObject] = useGlobal("userObject");
-
-  if (Global.userId === "123") {
-    console.log("there is no user right now");
-  } else {
-    console.log("userObject", userObject);
-  }
 
   const [firstName, setFirstName] = useState(userObject.firstName || "");
   const [lastName, setLastName] = useState(userObject.lastName || "");
@@ -31,6 +25,12 @@ export default function EditUser() {
     console.log("userObject :>> ", userObject);
     const updateUserResult = await updateUser(userObject);
     console.log("updateUserResult :>> ", updateUserResult);
+
+    if (updateUserResult === "Created") {
+      const getUserByIdResult = await getUserById(userObject.id);
+      await setUserObject(getUserByIdResult);
+      console.log("userObject :>> ", userObject);
+    }
   };
 
   // ========
