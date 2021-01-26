@@ -8,6 +8,8 @@ import React, { setGlobal } from "reactn";
 
 setGlobal({
   isLogin: false,
+  userId: "123",
+  userObject: {},
 });
 
 ReactDOM.render(

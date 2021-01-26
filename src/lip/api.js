@@ -1,4 +1,5 @@
 import axios from "axios";
+axios.defaults.withCredentials = true;
 
 const baseUrl = `http://localhost:5000`;
 
@@ -26,7 +27,6 @@ export const signUpNewUser = async (obj) => {
 };
 
 export const loginUser = async (loginObject) => {
-  console.log("loginObject", loginObject);
   let result;
   await axios
     .post(`${baseUrl}/api/users/login`, { user: loginObject })
@@ -36,7 +36,34 @@ export const loginUser = async (loginObject) => {
     .catch(function (error) {
       console.error(error);
     });
-  console.log("result", result);
+
+  return result;
+};
+
+export const getUserById = async (userId) => {
+  let result;
+  await axios
+    .get(`${baseUrl}/api/users/${userId}`)
+    .then(function (response) {
+      result = response.data;
+    })
+    .catch(function (error) {
+      console.error(error);
+    });
+
+  return result;
+};
+
+export const updateUser = async (userObject) => {
+  let result;
+  await axios
+    .put(`${baseUrl}/api/users/${userObject.id}`, { userObject })
+    .then(function (response) {
+      result = response.data;
+    })
+    .catch(function (error) {
+      console.error(error);
+    });
 
   return result;
 };
