@@ -22,7 +22,6 @@ export const signUpNewUser = async (obj) => {
     .catch(function (error) {
       console.error(error);
     });
-  console.log("result", result);
   return result;
 };
 
@@ -57,7 +56,7 @@ export const getUserById = async (userId) => {
 export const updateUser = async (userObject) => {
   let result;
   await axios
-    .put(`${baseUrl}/api/users/${userObject.id}`, { userObject })
+    .put(`${baseUrl}/api/users/${userObject.id}`, userObject)
     .then(function (response) {
       result = response.data;
     })
