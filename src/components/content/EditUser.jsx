@@ -15,7 +15,6 @@ export default function EditUser() {
     console.log("there is no user right now");
   } else {
     console.log("userObject", userObject);
-    console.log("userObject", userObject.firstName);
   }
 
   const [firstName, setFirstName] = useState(userObject.firstName || "");
@@ -25,12 +24,11 @@ export default function EditUser() {
 
   // ========
 
-  const onSignUpSubmit = async (event) => {
+  const onUpdateUserSubmit = async (event) => {
     event.preventDefault();
     let id = Global.userId;
     const userObject = { firstName, lastName, email, phoneNumber, id };
     console.log("userObject :>> ", userObject);
-
     const updateUserResult = await updateUser(userObject);
     console.log("updateUserResult :>> ", updateUserResult);
   };
@@ -48,7 +46,7 @@ export default function EditUser() {
           </Card.Title>
           <Form
             onSubmit={(event) => {
-              onSignUpSubmit(event);
+              onUpdateUserSubmit(event);
             }}
           >
             <Form.Group controlId="formName">

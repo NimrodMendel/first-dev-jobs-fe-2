@@ -53,7 +53,6 @@ export default function SignUp() {
         role,
       };
     }
-    console.log("global :>> ", global);
     const isPasswordsInvalid = await validatePasswords(
       newUser,
       passwordConfirmation
@@ -63,7 +62,6 @@ export default function SignUp() {
     } else {
       const signUpResult = await signUpNewUser(newUser);
 
-      console.log("signUpResult :>> ", signUpResult);
       if (signUpResult.id) {
         setValidationOK(`new user had been sign up`);
         setFirstName("");
