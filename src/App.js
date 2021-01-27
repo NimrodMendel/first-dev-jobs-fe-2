@@ -5,7 +5,7 @@ import SideBar from "./components/sidebar/SideBar";
 import Content from "./components/content/Content";
 
 import {
-  BrowserRouter,
+  BrowserRouter as Router,
 } from "react-router-dom";
 
 function App() {
@@ -40,12 +40,12 @@ function App() {
   };
 
     return (
-      <BrowserRouter>
+      <Router>
       <div className="App wrapper">
         <SideBar toggle={toggle} isOpen={isOpen} />
         <Content toggle={toggle} isOpen={isOpen} />
       </div>
-    </BrowserRouter>
+    </Router>
     );
   
 }

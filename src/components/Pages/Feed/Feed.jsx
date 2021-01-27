@@ -65,7 +65,7 @@ function Feed() {
       temp.unshift(job);
       setPosts(temp)
       
-      //savePost(jobPost)
+      savePost(jobPost)
 
       setSalary(3500)
       setLocation('Office');

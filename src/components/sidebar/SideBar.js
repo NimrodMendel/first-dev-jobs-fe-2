@@ -53,14 +53,14 @@ function SideBar(props) {
             items={["Link", "Link2", "Active"]}
           /> */}
           <Nav.Item>
-          <LinkContainer to="/myprofile">
-            <Nav.Link>
+          {/* <LinkContainer to="/myprofile"> */}
+            <Nav.Link href="/myprofile">
               <FontAwesomeIcon icon={faBriefcase} className="mr-2" />
               My Profile
             </Nav.Link>
-            </LinkContainer>
+            {/* </LinkContainer> */}
           </Nav.Item>
-          
+
           {/* <Nav.Item>
             <Nav.Link href="/">
               <FontAwesomeIcon icon={faImage} className="mr-2" />

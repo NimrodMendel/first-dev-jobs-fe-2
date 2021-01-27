@@ -10,7 +10,7 @@ const MyProfile = () => {
            <Nav variant="tabs" style={{display:'flex', justifyContent:'center'}}>
               <Nav.Item>
               <LinkContainer to="/myprofile">
-                <Nav.Link eventKey="link-0">User Profile</Nav.Link>
+                <Nav.Link eventKey="link-0">My Profile</Nav.Link>
                 </LinkContainer>
               </Nav.Item>
               <Nav.Item>
