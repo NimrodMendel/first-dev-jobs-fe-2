@@ -54,10 +54,10 @@ function SideBar(props) {
               <FontAwesomeIcon icon={faBriefcase} className="mr-2" />
               My Profile
             </Nav.Link>
-          </LinkContainer>
-        </Nav.Item>
-
-        {/* <Nav.Item>
+            </LinkContainer>
+          </Nav.Item>
+          
+          {/* <Nav.Item>
             <Nav.Link href="/">
               <FontAwesomeIcon icon={faImage} className="mr-2" />
               Bla Bla

@@ -103,3 +103,24 @@ export const updateUser = async (userObject) => {
 
   return result;
 };
+
+export const savePost = async (newPost) => {
+  console.log(newPost)
+  try {
+      const resp = await axios.post(`${baseUrl}/api/jobs`, newPost);
+      console.log(resp.data);
+  } catch (err) {
+      // Handle Error Here
+      console.error(err);
+  }
+};
+
+export const getAllPost = async () => {
+  try {
+      const resp = await axios.get(`${baseUrl}/api/jobs`);
+      return(resp.data);
+  } catch (err) {
+      // Handle Error Here
+      console.error(err);
+  }
+};

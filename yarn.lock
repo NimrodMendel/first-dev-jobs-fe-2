@@ -8277,6 +8277,14 @@ react-app-polyfill@^1.0.1:
     regenerator-runtime "^0.13.3"
     whatwg-fetch "^3.0.0"
 
+react-bootstrap-range-slider@^2.0.2:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/react-bootstrap-range-slider/-/react-bootstrap-range-slider-2.0.2.tgz#7c02860d8850aaeae0c80baa9fcd7b3749b35cf4"
+  integrity sha512-GptOpQjarlf6H2OfGsAqS1jOFFw8lsfQVLCWD6tgILspr2qZxzoiyUGLPDNfFFLy/ALhzGxlnVUrYjOe34UkhA==
+  dependencies:
+    classnames "^2.2.6"
+    prop-types "^15.7.2"
+
 react-bootstrap@^1.0.0-beta.9:
   version "1.4.3"
   resolved "https://registry.yarnpkg.com/react-bootstrap/-/react-bootstrap-1.4.3.tgz#9a76a66800b57f422dd824c9dbe4c9dcef634790"
@@ -8341,6 +8349,13 @@ react-dom@^16.8.6:
     object-assign "^4.1.1"
     prop-types "^15.6.2"
     scheduler "^0.19.1"
+
+react-dropzone-uploader@^2.11.0:
+  version "2.11.0"
+  resolved "https://registry.yarnpkg.com/react-dropzone-uploader/-/react-dropzone-uploader-2.11.0.tgz#6579e83f4f98c8248a3f3b5825c436ca3d6441cf"
+  integrity sha512-1DpdPMGKP7vYL5SeCh13HCl+Xrz0F6jGrDPU5Tj2ojEIXGMCtfflrZhyXdr7u40IkQ+hYjAUEEtJW24SiY8WRA==
+  dependencies:
+    "@babel/runtime" "^7.1.2"
 
 react-error-overlay@^6.0.3:
   version "6.0.8"
