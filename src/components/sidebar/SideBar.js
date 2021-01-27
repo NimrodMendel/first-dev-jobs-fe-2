@@ -60,7 +60,7 @@ function SideBar(props) {
             </Nav.Link>
             </LinkContainer>
           </Nav.Item>
-
+          
           {/* <Nav.Item>
             <Nav.Link href="/">
               <FontAwesomeIcon icon={faImage} className="mr-2" />
