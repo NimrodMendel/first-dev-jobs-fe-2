@@ -14,13 +14,13 @@ export default function SignUp() {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const [validationError, setValidationError] = useState("");
+  const [logo, setLogo] = useState("");
+  const [location, setLocation] = useState("");
   const [validationOK, setValidationOK] = useState("");
-  // const [isSignUp, setIsSignUp] = useState(false);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-  const [companyName, setCompanyName] = useState("");
+  const [name, setName] = useState("");
   const [passwordErrorMessage, setPasswordErrorMessage] = useState("");
-  // const [isPasswordError, setIsPasswordError] = useState(false);
   const [role, setRole] = useState("Employee");
 
   const openModel = () => {
@@ -46,11 +46,13 @@ export default function SignUp() {
       };
     } else {
       newUser = {
-        companyName,
+        name,
         email,
         phoneNumber,
         password,
         role,
+        location,
+        logo,
       };
     }
     const isPasswordsInvalid = await validatePasswords(
@@ -61,23 +63,26 @@ export default function SignUp() {
       setValidationError(isPasswordsInvalid);
     } else {
       const signUpResult = await signUpNewUser(newUser);
-
-      if (signUpResult.id) {
+      console.log(signUpResult);
+      if (signUpResult.id || signUpResult.created) {
         setValidationOK(`new user had been sign up`);
         setFirstName("");
         setLastName("");
-        setCompanyName("");
+        setName("");
         setFirstName("");
         setPhoneNumber("");
         setPassword("");
         setPasswordConfirmation("");
         setEmail("");
-      } else if ((signUpResult.error = "email already exists")) {
-        console.log("something went really wrong");
+      } else if (signUpResult.error === "email already exists") {
+        console.log("email already exists");
         setPasswordErrorMessage("email already exists");
+      } else {
+        console.log("something went really wrong");
       }
     }
   };
+
   return (
     <>
       <Button className="ml-3" onClick={openModel}>
@@ -171,10 +176,34 @@ export default function SignUp() {
                     <Form.Control
                       type="text"
                       placeholder="Enter Company Name"
-                      value={companyName}
+                      value={name}
                       required
                       onChange={(event) => {
-                        setCompanyName(event.target.value);
+                        setName(event.target.value);
+                      }}
+                    />
+                  </Form.Group>
+                  <Form.Group controlId="formCompanyLogo">
+                    <Form.Label>Company Logo</Form.Label>
+                    <Form.Control
+                      type="text"
+                      placeholder="Enter Company Logo"
+                      value={logo}
+                      required
+                      onChange={(event) => {
+                        setLogo(event.target.value);
+                      }}
+                    />
+                  </Form.Group>
+                  <Form.Group controlId="formCompanyLocation">
+                    <Form.Label>Company Location</Form.Label>
+                    <Form.Control
+                      type="text"
+                      placeholder="Enter Company Location"
+                      value={location}
+                      required
+                      onChange={(event) => {
+                        setLocation(event.target.value);
                       }}
                     />
                   </Form.Group>

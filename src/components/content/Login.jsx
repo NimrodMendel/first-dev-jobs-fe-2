@@ -32,18 +32,25 @@ export default function Login({ logInFunc }) {
   };
   const onLoginSubmit = async (event) => {
     event.preventDefault();
-
     const loginObject = { role, email, password };
     const loginResult = await loginUser(loginObject);
     if (loginResult.error) {
       setErrorMessage("Email or password are incorrect");
     }
     if (loginResult.id) {
-      await logInFunc();
       await setUserId(loginResult.id);
       await history.push(`/${Global.userId}`);
-      const getUserByIdResult = await getUserById(Global.userId);
-      await setUserObject(getUserByIdResult);
+      console.log("Global.userId :>> ", Global.userId);
+
+      const userToLogin = { id: Global.userId, role: role };
+
+      const getUserByIdResult = await getUserById(userToLogin);
+      console.log("getUserByIdResult :>> ", getUserByIdResult);
+      if (getUserByIdResult) {
+        await setUserObject(getUserByIdResult);
+        console.log("Global :>> ", Global);
+        await logInFunc();
+      }
     }
   };
 

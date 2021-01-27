@@ -13,43 +13,80 @@ export const validatePasswords = (obj, userPasswordConfirmation) => {
   }
 };
 export const signUpNewUser = async (obj) => {
+  console.log("obj", obj);
   let result;
-  await axios
-    .post(`${baseUrl}/api/users/signup`, { user: obj })
-    .then(async function (response) {
-      result = response.data;
-    })
-    .catch(function (error) {
-      console.error(error);
-    });
+
+  if (obj.role === "Employee") {
+    await axios
+      .post(`${baseUrl}/api/users/signup`, { user: obj })
+      .then(async function (response) {
+        result = response.data;
+      })
+      .catch(function (error) {
+        console.error(error);
+      });
+  } else if (obj.role === "Employer") {
+    await axios
+      .post(`${baseUrl}/api/company/signup`, { company: obj })
+      .then(async function (response) {
+        result = response.data;
+      })
+      .catch(function (error) {
+        console.error(error);
+      });
+  }
+  console.log("result", result);
   return result;
 };
 
 export const loginUser = async (loginObject) => {
   let result;
-  await axios
-    .post(`${baseUrl}/api/users/login`, { user: loginObject })
-    .then(function (response) {
-      result = response.data;
-    })
-    .catch(function (error) {
-      console.error(error);
-    });
+  if (loginObject.role === "Employee") {
+    await axios
+      .post(`${baseUrl}/api/users/login`, { user: loginObject })
+      .then(function (response) {
+        result = response.data;
+      })
+      .catch(function (error) {
+        console.error(error);
+      });
+  } else {
+    await axios
+      .post(`${baseUrl}/api/company/login`, loginObject)
+      .then(function (response) {
+        result = response.data;
+      })
+      .catch(function (error) {
+        console.error(error);
+      });
+  }
 
   return result;
 };
 
-export const getUserById = async (userId) => {
+export const getUserById = async (obj) => {
   let result;
-  await axios
-    .get(`${baseUrl}/api/users/${userId}`)
-    .then(function (response) {
-      result = response.data;
-    })
-    .catch(function (error) {
-      console.error(error);
-    });
-
+  if (obj.role === "Employee") {
+    await axios
+      .get(`${baseUrl}/api/users/${obj.id}`)
+      .then(function (response) {
+        result = response.data;
+        console.log("response.status", response.status);
+      })
+      .catch(function (error) {
+        console.error(error);
+      });
+  } else {
+    await axios
+      .get(`${baseUrl}/api/company/${obj.id}`)
+      .then(function (response) {
+        result = response.data;
+        console.log("response.status", response.status);
+      })
+      .catch(function (error) {
+        console.error(error);
+      });
+  }
   return result;
 };
 
